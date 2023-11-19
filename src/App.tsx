@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Map from './components/map';
+import { useLoadScript } from '@react-google-maps/api';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  // 
+  const {isLoaded} = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLEMAP_API_KEY || '',
+    libraries: ['places']
+  })
+
+  if (!isLoaded) return <div>Loading...</div>;
+
+
+  return(
+    <StyledEngineProvider injectFirst>
+      <Map />
+    </StyledEngineProvider>
+  ) 
+  ;
 }
 
 export default App;
